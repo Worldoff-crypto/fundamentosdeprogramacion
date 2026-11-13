@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Programación de Computadoras</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{color-scheme:light;--bg:#f5f7ff;--tx:#121a3a;--mut:#4a5679;--a:#4f46e5;--b:#0ea5e9;--c:#ec4899;--ln:rgba(79,70,229,.2);box-sizing:border-box}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--tx);font-family:'Poppins',system-ui,sans-serif}
+/* ---- CSS esencial de reveal.js (la hoja oficial no carga en páginas publicadas) ---- */
+.reveal-viewport{height:100%;overflow:hidden;position:relative;background:transparent}
+.reveal{position:relative;width:100%;height:100%;overflow:hidden;z-index:1}
+.reveal .slides{position:absolute;width:100%;height:100%;top:0;left:0;margin:auto;pointer-events:none;overflow:visible;text-align:center}
+.reveal .slides>section{position:absolute;width:100%;padding:0 70px;pointer-events:auto;transition:transform .8s cubic-bezier(.26,.86,.44,.985),opacity .8s,visibility .8s}
+.reveal .slides>section:not(.present){opacity:0;visibility:hidden;pointer-events:none}
+.reveal .slides>section.present{opacity:1;visibility:visible}
+.reveal .slides>section.past{transform:translateX(-150%)}
+.reveal .slides>section.future{transform:translateX(150%)}
+.reveal .slides>section[data-transition=zoom].past{transform:scale(1.7)}
+.reveal .slides>section[data-transition=zoom].future{transform:scale(.2)}
+.reveal .slides>section[data-transition=fade].past,.reveal .slides>section[data-transition=fade].future{transform:none}
+.reveal .progress{position:absolute;height:5px;width:100%;bottom:0;left:0;z-index:10;color:var(--a);background:rgba(79,70,229,.12)}
+.reveal .progress span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--a),var(--b),var(--c));transition:width .8s}
+.reveal .slide-number{position:absolute;right:16px;bottom:calc(18px + env(safe-area-inset-bottom,0px));z-index:31;font:500 14px 'Fira Code',monospace;color:var(--mut)}
+/* ---- Fondo animado ---- */
+#bg{position:fixed;inset:0;width:100%;height:100%;z-index:0}
+.blob{position:fixed;border-radius:50%;filter:blur(70px);opacity:.5;z-index:0;animation:bl 18s ease-in-out infinite alternate}
+.blob:nth-of-type(1){width:42vw;height:42vw;left:-8vw;top:-10vw;background:#c7d2fe}
+.blob:nth-of-type(2){width:36vw;height:36vw;right:-6vw;top:20vh;background:#bae6fd;animation-delay:-6s}
+.blob:nth-of-type(3){width:34vw;height:34vw;left:30vw;bottom:-14vw;background:#fbcfe8;animation-delay:-12s}
+@keyframes bl{to{transform:translate(8vw,6vh) scale(1.25)}}
+/* ---- Contenido ---- */
+.tag{font:500 15px 'Fira Code',monospace;letter-spacing:.3em;color:var(--a);text-transform:uppercase;margin-bottom:14px}
+h1{font-size:88px;font-weight:800;line-height:1.05;letter-spacing:-.03em}
+h2{font-size:52px;font-weight:700;line-height:1.1;letter-spacing:-.02em;margin-bottom:26px}
+.w{display:inline-block;white-space:nowrap}.ch{display:inline-block;opacity:0}
+.present .ch{animation:ch .7s cubic-bezier(.2,.9,.3,1.3) both;animation-delay:calc(var(--k)*.03s + .2s)}
+.present .g .ch{animation:ch .7s cubic-bezier(.2,.9,.3,1.3) both,cc 5s linear infinite;animation-delay:calc(var(--k)*.03s + .2s),calc(var(--k)*-.2s)}
+@keyframes ch{from{opacity:0;transform:translateY(.9em) rotate(10deg) scale(.6);filter:blur(5px)}to{opacity:1;transform:none;filter:none}}
+@keyframes cc{0%,100%{color:var(--a)}33%{color:var(--b)}66%{color:var(--c)}}
+p{font-size:26px;font-weight:300;color:var(--mut);line-height:1.55;max-width:760px;margin:0 auto}
+p b{color:var(--tx);font-weight:500}
+.row{display:flex;flex-wrap:wrap;gap:18px;justify-content:center;align-items:stretch;margin:20px 0}
+.chip{padding:10px 24px;border-radius:999px;border:1px solid var(--ln);background:#fff;box-shadow:0 6px 18px rgba(79,70,229,.1);font:500 22px 'Fira Code',monospace;color:var(--a)}
+.card{padding:22px 24px;border-radius:20px;background:#fff;border:1px solid var(--ln);box-shadow:0 10px 28px rgba(79,70,229,.12);width:236px}
+.card h3{font-size:24px;margin-bottom:6px}.card p{font-size:19px;line-height:1.4}
+.ic{font-size:36px;display:block;margin-bottom:4px}
+.big{font:800 54px 'Fira Code',monospace;color:var(--a)}
+pre{display:inline-block;font:400 21px/1.65 'Fira Code',monospace;text-align:left;color:#1e2a5a;padding:20px 28px;border-radius:16px;border:1px solid var(--ln);background:#fff;box-shadow:0 12px 34px rgba(79,70,229,.14)}
+pre i{color:var(--a);font-style:normal;font-weight:500}pre em{color:var(--c);font-style:normal}pre u{color:#94a3b8;text-decoration:none}
+pre.tw{clip-path:inset(0 100% 0 0)}.present pre.tw{animation:tw 1.8s steps(30) .6s both}
+@keyframes tw{to{clip-path:inset(0)}}
+.arrow{color:var(--c);font-size:40px;align-self:center}.present .arrow{animation:ar 1.2s ease-in-out infinite}@keyframes ar{50%{transform:translateX(10px)}}
+.stat{font-size:20px;margin-top:22px}
+ul{list-style:none;display:inline-flex;flex-direction:column;gap:10px;text-align:left}
+li{font-size:25px;font-weight:300;color:var(--mut)}li b{color:var(--tx);font-weight:500}
+li::before{content:"";display:inline-block;width:12px;height:12px;border-radius:50%;background:linear-gradient(135deg,var(--a),var(--c));margin-right:14px}
+.present .f{animation:in .8s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(var(--i)*.14s + .5s)}
+.present .card.f,.present .chip.f{animation:in .8s cubic-bezier(.2,.8,.2,1) both,fl 4.5s ease-in-out infinite;animation-delay:calc(var(--i)*.14s + .5s),calc(var(--i)*.35s + 1.6s)}
+@keyframes in{from{opacity:0;transform:translateY(28px) scale(.95);filter:blur(6px)}to{opacity:1;transform:none;filter:none}}
+@keyframes fl{50%{transform:translateY(-10px)}}
+#ui{position:fixed;left:20px;bottom:calc(14px + env(safe-area-inset-bottom,0px));z-index:40;display:flex;gap:10px}
+#ui button{width:42px;height:42px;border-radius:50%;border:1px solid var(--ln);background:#fff;color:var(--a);font-size:18px;cursor:pointer;box-shadow:0 4px 12px rgba(79,70,229,.15)}
+@media(prefers-reduced-motion:reduce){.blob,.f,.ch,pre.tw{animation:none!important;opacity:1!important;clip-path:none!important}}
+</style>
+</head>
+<body>
+<canvas id="bg"></canvas><div class="blob"></div><div class="blob"></div><div class="blob"></div>
+<div class="reveal"><div class="slides">
+
+<section data-transition="zoom">
+  <div class="tag f">Tutorial · K. K. Panigrahi</div>
+  <h1>Programación de <span class="g">Computadoras</span></h1>
+  <p class="f" style="margin-top:22px">Una guía visual para dar tus primeros pasos en C, Java y Python</p>
+  <div class="row"><span class="chip f">C</span><span class="chip f">Java</span><span class="chip f">Python</span></div>
+</section>
+
+<section>
+  <div class="tag f">01 · Overview</div>
+  <h2>¿Qué es un <span class="g">programa</span>?</h2>
+  <p class="f">Una <b>secuencia de instrucciones</b> escrita en un <b>lenguaje de programación</b> para que la computadora realice una tarea específica.</p>
+  <div class="row">
+    <div class="card f"><span class="ic">⌨️</span><h3>Entrada</h3><p>Datos que recibe</p></div><span class="arrow f">→</span>
+    <div class="card f"><span class="ic">⚙️</span><h3>Proceso</h3><p>Instrucciones que ejecuta</p></div><span class="arrow f">→</span>
+    <div class="card f"><span class="ic">🖥️</span><h3>Salida</h3><p>Resultado que entrega</p></div>
+  </div>
+</section>
+
+<section data-transition="fade">
+  <div class="tag f">Una analogía</div>
+  <h2>Cómo llegar a <span class="g">KFC</span></h2>
+  <div class="row">
+    <div class="card f" style="width:190px"><span class="big">1</span><p>Ir recto</p></div>
+    <div class="card f" style="width:190px"><span class="big">2</span><p>Avanzar medio km</p></div>
+    <div class="card f" style="width:190px"><span class="big">3</span><p>Girar a la izquierda</p></div>
+    <div class="card f" style="width:190px"><span class="big">4</span><p>Avanzar 1 km</p></div>
+    <div class="card f" style="width:190px"><span class="big">5</span><p>KFC a tu derecha</p></div>
+  </div>
+  <p class="stat f">Un programa también son pasos <b>ordenados</b> y <b>sin ambigüedad</b>.</p>
+</section>
+
+<section data-transition="zoom">
+  <div class="tag f">Código fuente</div>
+  <h2>Tu primer <span class="g">programa</span></h2>
+  <pre class="tw"><i>print</i>(<em>“Hello, World!”</em>)</pre>
+  <p class="f" style="margin-top:26px">Sin programas, una computadora es solo una caja muda.</p>
+  <p class="stat f">Dato: la tradición del “Hello, World” nació en los años 70.</p>
+</section>
+
+<section>
+  <div class="tag f">Lenguajes</div>
+  <h2>Cientos de <span class="g">lenguajes</span></h2>
+  <div class="row">
+    <div class="card f"><h3>Python</h3><p>IA, datos y automatización</p></div>
+    <div class="card f"><h3>Java</h3><p>Apps empresariales y Android</p></div>
+    <div class="card f"><h3>C / C++</h3><p>Sistemas, motores y videojuegos</p></div>
+    <div class="card f"><h3>PHP · Ruby · Perl</h3><p>Web y scripting</p></div>
+  </div>
+</section>
+
+<section data-transition="zoom">
+  <div class="tag f">Aplicaciones</div>
+  <h2>Programas en <span class="g">todas partes</span></h2>
+  <div class="row">
+    <div class="card f"><span class="ic">🎬</span><h3>Cine</h3><p>Gráficos y efectos especiales</p></div>
+    <div class="card f"><span class="ic">🩺</span><h3>Medicina</h3><p>Ultrasonidos y rayos X</p></div>
+    <div class="card f"><span class="ic">📱</span><h3>Móviles</h3><p>SMS, chat y voz</p></div>
+    <div class="card f"><span class="ic">💻</span><h3>Software</h3><p>Word, Excel, Chrome</p></div>
+  </div>
+  <p class="stat f">El <b>programador</b> es quien los escribe y se nombra según su lenguaje.</p>
+</section>
+
+<section>
+  <div class="tag f">Pensar antes de codificar</div>
+  <h2>El <span class="g">algoritmo</span></h2>
+  <ul>
+    <li class="f">Un procedimiento <b>paso a paso</b> para resolver un problema</li>
+    <li class="f">Un conjunto <b>finito</b> de instrucciones bien definidas</li>
+    <li class="f">Ejemplo: encontrar el <b>número mayor</b> de una lista</li>
+  </ul><br>
+  <pre class="tw" style="margin-top:22px"><i>mayor</i> ← lista[0]
+<i>para cada</i> n <i>en</i> lista:
+  <i>si</i> n &gt; mayor: mayor ← n</pre>
+</section>
+
+<section>
+  <div class="tag f">03 · Entorno</div>
+  <h2>Tu <span class="g">entorno</span> de trabajo</h2>
+  <div class="row">
+    <div class="card f"><span class="ic">📝</span><h3>Editor</h3><p>Donde escribes el código</p></div><span class="arrow f">→</span>
+    <div class="card f"><span class="ic">🏭</span><h3>Compilador</h3><p>Traduce todo antes de ejecutar. Ej.: C, Java</p></div><span class="arrow f">/</span>
+    <div class="card f"><span class="ic">🚀</span><h3>Intérprete</h3><p>Ejecuta línea por línea. Ej.: Python</p></div>
+  </div>
+</section>
+
+<section data-transition="zoom">
+  <div class="tag f">04 · Sintaxis</div>
+  <h2>Hello World en <span class="g">tres lenguajes</span></h2>
+  <div class="row" style="align-items:flex-start">
+<pre class="tw"><b>C</b>
+<i>#include</i> &lt;stdio.h&gt;
+<i>int</i> main() {
+  printf(<em>“Hello!”</em>);
+}</pre>
+<pre class="tw"><b>Java</b>
+<i>public class</i> Hello {
+  <i>public static void</i>
+    main(String[] a) {
+    System.out.println(
+      <em>“Hello!”</em>);
+  }
+}</pre>
+<pre class="tw"><b>Python</b>
+<i>print</i>(<em>“Hello!”</em>)</pre>
+  </div>
+  <p class="stat f">Misma idea, distinta cantidad de ceremonia.</p>
+</section>
+
+<section>
+  <div class="tag f">05 · Datos y variables</div>
+  <h2>Variables: <span class="g">cajas con nombre</span></h2>
+  <div class="row"><span class="chip f">int</span><span class="chip f">float</span><span class="chip f">char</span><span class="chip f">boolean</span><span class="chip f">String</span><span class="chip f">list</span></div>
+  <pre class="tw"><i>int</i> edad = <em>25</em>;   <u>// C / Java</u>
+edad = <em>25</em>        <u># Python</u></pre>
+  <p class="stat f">El tipo define qué clase de valor guarda la variable en memoria.</p>
+</section>
+
+<section>
+  <div class="tag f">06 · Operadores</div>
+  <h2>Operadores</h2>
+  <div class="row">
+    <div class="card f"><div class="big">+ −</div><h3>Aritméticos</h3><p>Calculan: 5 + 3</p></div>
+    <div class="card f"><div class="big">&lt; ==</div><h3>Relacionales</h3><p>Comparan: edad &gt; 18</p></div>
+    <div class="card f"><div class="big">&amp;&amp; ||</div><h3>Lógicos</h3><p>Combinan condiciones</p></div>
+  </div>
+</section>
+
+<section data-transition="zoom">
+  <div class="tag f">07 · Decisiones</div>
+  <h2>Decisiones con <span class="g">if…else</span></h2>
+  <pre class="tw"><i>if</i> (edad &gt;= <em>18</em>) {
+  printf(<em>“Mayor de edad”</em>);
+} <i>else</i> {
+  printf(<em>“Menor de edad”</em>);
+}</pre>
+  <p class="stat f">El programa elige un camino según se cumpla o no la condición.</p>
+</section>
+
+<section>
+  <div class="tag f">08 · Bucles</div>
+  <h2>Repetir sin <span class="g">cansarse</span></h2>
+  <div class="row"><span class="chip f">for</span><span class="chip f">while</span><span class="chip f">do…while</span><span class="chip f">break</span><span class="chip f">continue</span></div>
+  <pre class="tw"><i>while</i> (i &lt; <em>5</em>) { i++; }</pre>
+</section>
+
+<section>
+  <div class="tag f">09 · Estructuras</div>
+  <h2>Arrays, strings, funciones y <span class="g">archivos</span></h2>
+  <div class="row">
+    <div class="card f"><span class="ic">🧺</span><h3>Arrays</h3><p>Colecciones de elementos</p></div>
+    <div class="card f"><span class="ic">🔤</span><h3>Strings</h3><p>Cadenas de texto</p></div>
+    <div class="card f"><span class="ic">🧩</span><h3>Funciones</h3><p>Bloques reutilizables</p></div>
+    <div class="card f"><span class="ic">📂</span><h3>File I/O</h3><p>Leer y escribir archivos</p></div>
+  </div>
+</section>
+
+<section data-transition="zoom">
+  <div class="tag f">Resumen</div>
+  <h1><span class="g">Gracias</span></h1>
+  <p class="f" style="margin-top:22px">Practica, repite y disfruta escribiendo código.</p>
+  <div class="row"><span class="chip f">Idea → Algoritmo → Código → Ejecución</span></div>
+  <p class="stat f">← → para navegar · F pantalla completa</p>
+</section>
+
+</div></div>
+<div id="ui"><button id="prev" aria-label="Anterior">←</button><button id="next" aria-label="Siguiente">→</button></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/reveal.min.js"></script>
+<script>
+/* Texto: cada letra de los títulos entra animada */
+document.querySelectorAll('h1,h2').forEach(el=>{
+  let K=0;const w=document.createTreeWalker(el,NodeFilter.SHOW_TEXT),ns=[];while(w.nextNode())ns.push(w.currentNode);
+  ns.forEach(n=>{const f=document.createDocumentFragment();
+    n.textContent.split(/(\s+)/).forEach(t=>{
+      if(!t)return;if(/^\s+$/.test(t)){f.append(t);return}
+      const wd=document.createElement('span');wd.className='w';
+      [...t].forEach(c=>{const s=document.createElement('span');s.className='ch';s.textContent=c;s.style.setProperty('--k',K++);wd.append(s)});
+      f.append(wd)});
+    n.replaceWith(f)});
+});
+document.querySelectorAll('.slides>section').forEach(s=>s.querySelectorAll('.f').forEach((e,i)=>e.style.setProperty('--i',i)));
+/* Motor: reveal.js */
+if(window.Reveal){
+  Reveal.initialize({width:1280,height:720,margin:.04,center:true,hash:false,controls:false,progress:true,slideNumber:'c/t',transition:'slide',mouseWheel:true,touch:true,keyboard:true});
+  document.getElementById('prev').onclick=()=>Reveal.prev();
+  document.getElementById('next').onclick=()=>Reveal.next();
+}else{
+  document.body.style.overflow='auto';
+  document.querySelectorAll('.slides>section').forEach(s=>s.style.cssText='display:block;position:relative;opacity:1;visibility:visible;margin:40px 0');
+}
+/* Fondo: símbolos de código flotando + red de nodos */
+const cv=document.getElementById('bg'),cx=cv.getContext('2d');let W,H,G=[],P=[],m={x:-999,y:-999},tk=0;
+const sym=['{ }','</>','0','1','=>',';','()','[]','#','&&','if','++','λ','fn'],cl=['79,70,229','14,165,233','236,72,153'];
+function rs(){const d=Math.min(devicePixelRatio||1,2);W=innerWidth;H=innerHeight;cv.width=W*d;cv.height=H*d;cx.setTransform(d,0,0,d,0,0);
+  G=Array.from({length:Math.round(W*H/22000)},()=>({x:Math.random()*W,y:Math.random()*H,s:Math.random()*Math.PI,v:.25+Math.random()*.6,z:14+Math.random()*26,t:sym[Math.floor(Math.random()*sym.length)],c:cl[Math.floor(Math.random()*3)],r:Math.random()*.6-.3}));
+  P=Array.from({length:Math.round(W*H/26000)},()=>({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.4,vy:(Math.random()-.5)*.4}))}
+addEventListener('resize',rs);addEventListener('mousemove',e=>{m.x=e.clientX;m.y=e.clientY});rs();
+function draw(){
+  tk++;cx.clearRect(0,0,W,H);
+  for(const p of P){p.x+=p.vx;p.y+=p.vy;if(p.x<0||p.x>W)p.vx*=-1;if(p.y<0||p.y>H)p.vy*=-1}
+  for(let i=0;i<P.length;i++){const a=P[i];
+    for(let j=i+1;j<P.length;j++){const b=P[j],d=Math.hypot(a.x-b.x,a.y-b.y);
+      if(d<150){cx.strokeStyle=`rgba(79,70,229,${(1-d/150)*.22})`;cx.lineWidth=1;cx.beginPath();cx.moveTo(a.x,a.y);cx.lineTo(b.x,b.y);cx.stroke()}}
+    cx.fillStyle='rgba(79,70,229,.45)';cx.beginPath();cx.arc(a.x,a.y,2.4,0,6.3);cx.fill()}
+  for(const g of G){
+    g.y-=g.v;g.x+=Math.sin(tk/70+g.s)*.5;if(g.y<-40){g.y=H+40;g.x=Math.random()*W}
+    const dx=g.x-m.x,dy=g.y-m.y,d=Math.hypot(dx,dy);if(d<120){g.x+=dx/d*2;g.y+=dy/d*2}
+    cx.save();cx.translate(g.x,g.y);cx.rotate(g.r+Math.sin(tk/90+g.s)*.25);
+    cx.font=`500 ${g.z}px 'Fira Code',monospace`;cx.fillStyle=`rgba(${g.c},.28)`;cx.fillText(g.t,0,0);cx.restore()}
+  requestAnimationFrame(draw);
+}
+draw();
+</script>
+</body>
+</html>
